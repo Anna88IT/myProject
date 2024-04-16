@@ -5,13 +5,14 @@ const Schema = mongoose.Schema;
 export const bookSchema = new Schema({
     title: String,
     author: String,
-    date: Date,
+    date: String,
     language: String,
     genre: {
         type: Schema.Types.ObjectId,
         ref: "genre"
     },
-    description: String
+    description: String,
+    img: String
 
 });
 

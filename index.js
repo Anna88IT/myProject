@@ -1,16 +1,20 @@
 import express from "express";
+import bodyParser from "body-parser"
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import addBookController from "./controllers/admin/addBookConroller.js"
 import genresController from "./controllers/admin/genresController.js"
 import authorController from "./controllers/admin/authorController.js"
 import languageController from "./controllers/admin/languageController.js"
+import register from "./routes/auth/registerRoutes.js";
+import "./db/users.js"
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3002;
 const mongoUrl = process.env.MONGODB;
-
+app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -32,7 +36,7 @@ app.use("/admin/book", addBookController);
 app.use("/admin/genre", genresController);
 app.use("/admin/author", authorController);
 app.use("/admin/language", languageController);
-
+app.use("/register", register)
 
 app.listen(port, () => {
     console.log(`the server is listening to port ${port}`);
